@@ -1,4 +1,4 @@
-package com.eshuix.javademo.utli;
+package com.eshuix.javademo.app;
 
 import android.app.Application;
 
@@ -9,5 +9,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         HttpHelper.getInstance(this).getBuilder();
+
     }
 }

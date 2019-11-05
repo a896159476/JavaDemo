@@ -1,13 +1,16 @@
 package com.eshuix.javademo.base;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +18,9 @@ import org.jetbrains.annotations.NotNull;
 public abstract class BaseFragment extends Fragment {
 
     private BaseActivity mActivity;
+
+    private BaseActivity.OnMeasureSizeCallback onMeasureSizeCallback;
+    private View[] views;
 
     public abstract int attachLayoutRes();
 
@@ -39,6 +45,42 @@ public abstract class BaseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
         initData();
+    }
+
+    /**
+     * 设置获取控件大小的回调
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setOnMeasureSizeCallback(BaseActivity.OnMeasureSizeCallback onMeasureSizeCallback, View... views) {
+        this.onMeasureSizeCallback = onMeasureSizeCallback;
+        this.views = views;
+    }
+
+    /**
+     * fragment显示时获取控件大小
+     */
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden && onMeasureSizeCallback != null) {
+            for (View view : views) {
+                getMeasureSize(view);
+            }
+        }
+    }
+
+    /**
+     * 获取控件大小
+     */
+    private void getMeasureSize(final View view) {
+        final ViewTreeObserver vto = view.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                vto.removeOnGlobalLayoutListener(this);
+                onMeasureSizeCallback.getMeasureSize(view);
+            }
+        });
     }
 
     /*

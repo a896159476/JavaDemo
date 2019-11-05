@@ -27,6 +27,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    //okhttp
+    implementation 'com.google.android.material:material:1.0.0'
+    //okhttp3
     implementation("com.squareup.okhttp3:okhttp:4.2.1")
+    //leakcanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
 }

@@ -1,4 +1,4 @@
-package com.eshuix.javademo;
+package com.eshuix.javademo.utli;
 
 import android.net.ConnectivityManager;
 import android.net.Network;

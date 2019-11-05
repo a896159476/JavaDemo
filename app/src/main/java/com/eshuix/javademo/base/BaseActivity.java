@@ -2,15 +2,13 @@ package com.eshuix.javademo.base;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Size;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -19,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.eshuix.javademo.NetworkCallbackImpl;
+import com.eshuix.javademo.utli.NetworkCallbackImpl;
 import com.eshuix.javademo.utli.LoadDialog;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -28,6 +26,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private NetworkCallbackImpl networkCallback;
     private ConnectivityManager connMgr;
+
+    private OnMeasureSizeCallback onMeasureSizeCallback;
+    private View[] views;
 
     /**
      * 布局文件id
@@ -73,38 +74,33 @@ public abstract class BaseActivity extends AppCompatActivity {
         loadDialog.setCancelable(false);
     }
 
-    private OnMeasureSizeCallback onMeasureSizeCallback;
-
     /**
      * 获取控件大小接口
      */
     public interface OnMeasureSizeCallback {
-        void getMeasureSize(View view, Size size);
+        void getMeasureSize(View view);
     }
 
     /**
-     * 设置获取控件大小回调
+     * 设置获取控件大小的回调
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void setOnMeasureSizeCallback(OnMeasureSizeCallback onMeasureSizeCallback) {
+    public void setOnMeasureSizeCallback(OnMeasureSizeCallback onMeasureSizeCallback, View... views) {
         this.onMeasureSizeCallback = onMeasureSizeCallback;
+        this.views = views;
     }
 
     /**
-     * 获取控件大小
+     * 获取焦点时调用获取控件大小的回调
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public BaseActivity viewPost(final View view) {
-        if (onMeasureSizeCallback != null) {
-            view.post(new Runnable() {
-                @Override
-                public void run() {
-                    Size size = new Size(view.getMeasuredWidth(), view.getMeasuredHeight());
-                    onMeasureSizeCallback.getMeasureSize(view, size);
-                }
-            });
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && onMeasureSizeCallback != null) {
+            for (View view : views) {
+                onMeasureSizeCallback.getMeasureSize(view);
+            }
         }
-        return this;
     }
 
     /**
