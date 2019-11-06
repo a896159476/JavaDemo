@@ -1,8 +1,10 @@
-package com.eshuix.javademo.base;
+package com.eshuix.javademo.base.mvp;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+
+import com.eshuix.javademo.base.BaseActivity;
 
 public abstract class BaseMvpActivity<V extends IView,P extends IPresenter<V>> extends BaseActivity implements IView {
 

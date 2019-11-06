@@ -1,4 +1,4 @@
-package com.eshuix.javademo.base;
+package com.eshuix.javademo.base.mvp;
 
 import android.os.Bundle;
 

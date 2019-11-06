@@ -50,7 +50,6 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 设置获取控件大小的回调
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setOnMeasureSizeCallback(BaseActivity.OnMeasureSizeCallback onMeasureSizeCallback, View... views) {
         this.onMeasureSizeCallback = onMeasureSizeCallback;
         this.views = views;

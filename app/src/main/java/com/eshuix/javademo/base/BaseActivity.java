@@ -8,7 +8,6 @@ import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -84,7 +83,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 设置获取控件大小的回调
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setOnMeasureSizeCallback(OnMeasureSizeCallback onMeasureSizeCallback, View... views) {
         this.onMeasureSizeCallback = onMeasureSizeCallback;
         this.views = views;

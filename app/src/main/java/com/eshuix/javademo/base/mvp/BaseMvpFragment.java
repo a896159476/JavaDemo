@@ -1,9 +1,11 @@
-package com.eshuix.javademo.base;
+package com.eshuix.javademo.base.mvp;
 
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+
+import com.eshuix.javademo.base.BaseFragment;
 
 public abstract class BaseMvpFragment<V extends IView, P extends IPresenter<V>> extends BaseFragment implements IView {
 

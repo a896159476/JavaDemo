@@ -1,8 +1,8 @@
 package com.eshuix.javademo.main;
 
-import com.eshuix.javademo.base.IModel;
-import com.eshuix.javademo.base.IPresenter;
-import com.eshuix.javademo.base.IView;
+import com.eshuix.javademo.base.mvp.IModel;
+import com.eshuix.javademo.base.mvp.IPresenter;
+import com.eshuix.javademo.base.mvp.IView;
 
 public interface MainContract{
     interface View extends IView{
